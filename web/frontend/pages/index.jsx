@@ -19,7 +19,7 @@ export default function HomePage() {
 
   /* useAppQuery wraps react-query and the App Bridge authenticatedFetch function */
   const {
-    data: QRCodes,
+    data: rules,
     isLoading,
 
     /*
@@ -30,12 +30,12 @@ export default function HomePage() {
   */
     isRefetching,
   } = useAppQuery({
-    url: "/api/qrcodes",
+    url: "/api/rules",
   });
 
   /* Set the QR codes to use in the list */
-  const qrCodesMarkup = QRCodes?.length ? (
-    <QRCodeIndex QRCodes={QRCodes} loading={isRefetching} />
+  const qrCodesMarkup = rules?.length ? (
+    <QRCodeIndex rules={rules} loading={isRefetching} />
   ) : null;
 
   /* loadingMarkup uses the loading component from AppBridge and components from Polaris  */
@@ -48,18 +48,19 @@ export default function HomePage() {
 
   /* Use Polaris Card and EmptyState components to define the contents of the empty state */
   const emptyStateMarkup =
-    !isLoading && !QRCodes?.length ? (
+    !isLoading && !rules?.length ? (
       <Card sectioned>
         <EmptyState
-          heading="Create unique QR codes for your product"
+          heading="Create rules your way to stay updated"
           action={{
-            content: "Create QR code",
-            onAction: () => navigate("/qrcodes/new"),
+            content: "Create rule",
+            onAction: () => navigate("/rules/new"),
           }}
           image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
         >
           <p>
-            Allow customers to scan codes and buy products using their phones.
+            Allow your self/team to stay updated about what's going on on your
+            store
           </p>
         </EmptyState>
       </Card>
@@ -72,10 +73,10 @@ export default function HomePage() {
   return (
     <Page fullWidth={!!qrCodesMarkup}>
       <TitleBar
-        title="QR codes"
+        title="Slackify for Shopify"
         primaryAction={{
-          content: "Create QR code",
-          onAction: () => navigate("/qrcodes/new"),
+          content: "Create a new rule",
+          onAction: () => navigate("/rules/new"),
         }}
       />
       <Layout>

@@ -9,88 +9,25 @@
 import express from "express";
 
 import {
-  formatQrCodeResponse,
+  formatRuleResponse,
   getQrCodeOr404,
   getShopUrlFromSession,
-  parseQrCodeBody,
-} from "../helpers/qr-codes.js";
-import { QRCodesDB } from "../qr-codes-db.js";
-import shopify from "../shopify.js";
+  parseRuleBody,
+} from "../helpers/rules.js";
+import { rulesDB } from "../rules-db.js";
 
-const DISCOUNTS_QUERY = `
-  query discounts($first: Int!) {
-    codeDiscountNodes(first: $first) {
-      edges {
-        node {
-          id
-          codeDiscount {
-            ... on DiscountCodeBasic {
-              codes(first: 1) {
-                edges {
-                  node {
-                    code
-                  }
-                }
-              }
-            }
-            ... on DiscountCodeBxgy {
-              codes(first: 1) {
-                edges {
-                  node {
-                    code
-                  }
-                }
-              }
-            }
-            ... on DiscountCodeFreeShipping {
-              codes(first: 1) {
-                edges {
-                  node {
-                    code
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export default function applyQrCodeApiEndpoints(app) {
+export default function applyRuleApiEndpoints(app) {
   app.use(express.json());
-
-  app.get("/api/discounts", async (req, res) => {
-    const client = new shopify.api.clients.Graphql({
-      session: res.locals.shopify.session,
-    });
-
-    /* Fetch all available discounts to list in the QR code form */
-    const discounts = await client.query({
-      data: {
-        query: DISCOUNTS_QUERY,
-        variables: {
-          first: 25,
-        },
-      },
-    });
-
-    res.send(discounts.body.data);
-  });
 
   app.post("/api/rules", async (req, res) => {
     try {
-      const id = await QRCodesDB.create({
-        ...(await parseQrCodeBody(req)),
+      const id = await rulesDB.create({
+        ...(await parseRuleBody(req)),
 
         /* Get the shop from the authorization header to prevent users from spoofing the data */
         shopDomain: await getShopUrlFromSession(req, res),
       });
-      const response = await formatQrCodeResponse(req, res, [
-        await QRCodesDB.read(id),
-      ]);
-      res.status(201).send(response[0]);
+      res.status(201).send(await rulesDB.read(id)[0]);
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -114,11 +51,11 @@ export default function applyQrCodeApiEndpoints(app) {
 
   app.get("/api/rules", async (req, res) => {
     try {
-      const rawCodeData = await QRCodesDB.list(
+      const rawCodeData = await rulesDB.list(
         await getShopUrlFromSession(req, res)
       );
 
-      const response = await formatQrCodeResponse(req, res, rawCodeData);
+      const response = await formatRuleResponse(req, res, rawCodeData);
       res.status(200).send(response);
     } catch (error) {
       console.error(error);

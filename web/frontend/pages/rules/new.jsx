@@ -3,12 +3,12 @@ import { Page } from "@shopify/polaris";
 import { QRCodeForm } from "../../components";
 
 export default function ManageCode() {
-  const breadcrumbs = [{ content: "QR codes", url: "/" }];
+  const breadcrumbs = [{ content: "Rules", url: "/" }];
 
   return (
     <Page>
       <TitleBar
-        title="Create new QR code"
+        title="Create new rule"
         breadcrumbs={breadcrumbs}
         primaryAction={null}
       />

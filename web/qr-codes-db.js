@@ -124,7 +124,7 @@ export const QRCodesDB = {
 
   /* The destination URL for a QR code is generated at query time */
   generateQrcodeDestinationUrl: function (qrcode) {
-    return `${shopify.api.config.hostScheme}://${shopify.api.config.hostName}/qrcodes/${qrcode.id}/scan`;
+    return `${shopify.api.config.hostScheme}://${shopify.api.config.hostName}/rules/${qrcode.id}/scan`;
   },
 
   /* The behavior when a QR code is scanned */
@@ -222,7 +222,7 @@ export const QRCodesDB = {
   },
 
   __generateQrcodeImageUrl: function (qrcode) {
-    return `${shopify.api.config.hostScheme}://${shopify.api.config.hostName}/qrcodes/${qrcode.id}/image`;
+    return `${shopify.api.config.hostScheme}://${shopify.api.config.hostName}/rules/${qrcode.id}/image`;
   },
 
   __increaseScanCount: async function (qrcode) {

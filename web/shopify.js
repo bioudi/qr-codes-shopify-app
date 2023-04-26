@@ -4,7 +4,7 @@ import { shopifyApp } from "@shopify/shopify-app-express";
 import { SQLiteSessionStorage } from "@shopify/shopify-app-session-storage-sqlite";
 import { join } from "path";
 import sqlite3 from "sqlite3";
-import { QRCodesDB } from "./qr-codes-db.js";
+import { rulesDB } from "./rules-db.js";
 
 const DB_PATH = `${process.cwd()}/database.sqlite`;
 
@@ -22,8 +22,8 @@ const billingConfig = {
 const database = new sqlite3.Database(join(process.cwd(), "database.sqlite"));
 
 // Initialize SQLite DB
-QRCodesDB.db = database;
-QRCodesDB.init();
+rulesDB.db = database;
+rulesDB.init();
 
 const shopify = shopifyApp({
   api: {

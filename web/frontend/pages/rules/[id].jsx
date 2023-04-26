@@ -18,7 +18,7 @@ export default function QRCodeEdit() {
     isLoading,
     isRefetching,
   } = useAppQuery({
-    url: `/api/qrcodes/${id}`,
+    url: `/api/rules/${id}`,
     reactQueryOptions: {
       /* Disable refetching because the QRCodeForm component ignores changes to its props */
       refetchOnReconnect: false,
@@ -30,7 +30,7 @@ export default function QRCodeEdit() {
     return (
       <Page>
         <TitleBar
-          title="Edit QR code"
+          title="Edit rule"
           breadcrumbs={breadcrumbs}
           primaryAction={null}
         />
@@ -63,11 +63,11 @@ export default function QRCodeEdit() {
   return (
     <Page>
       <TitleBar
-        title="Edit QR code"
+        title="Edit rule"
         breadcrumbs={breadcrumbs}
         primaryAction={null}
       />
-      <QRCodeForm QRCode={QRCode} />
+      <QRCodeForm rule={QRCode} />
     </Page>
   );
 }
