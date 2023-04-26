@@ -39,16 +39,7 @@ export const rulesDB = {
         id = ?;
     `;
 
-    await this.__query(query, [
-      title,
-      productId,
-      variantId,
-      handle,
-      discountId,
-      discountCode,
-      destination,
-      id,
-    ]);
+    await this.__query(query, [title, trigger, id]);
     return true;
   },
 

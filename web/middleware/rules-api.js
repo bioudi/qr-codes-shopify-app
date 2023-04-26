@@ -10,7 +10,7 @@ import express from "express";
 
 import {
   formatRuleResponse,
-  getQrCodeOr404,
+  getRuleOr404,
   getShopUrlFromSession,
   parseRuleBody,
 } from "../helpers/rules.js";
@@ -34,13 +34,13 @@ export default function applyRuleApiEndpoints(app) {
   });
 
   app.patch("/api/rules/:id", async (req, res) => {
-    const qrcode = await getQrCodeOr404(req, res);
+    const rule = await getRuleOr404(req, res);
 
-    if (qrcode) {
+    if (rule) {
       try {
-        await QRCodesDB.update(req.params.id, await parseQrCodeBody(req));
-        const response = await formatQrCodeResponse(req, res, [
-          await QRCodesDB.read(req.params.id),
+        await rulesDB.update(req.params.id, await parseRuleBody(req));
+        const response = await formatRuleResponse(req, res, [
+          await rulesDB.read(req.params.id),
         ]);
         res.status(200).send(response[0]);
       } catch (error) {
@@ -64,19 +64,19 @@ export default function applyRuleApiEndpoints(app) {
   });
 
   app.get("/api/rules/:id", async (req, res) => {
-    const qrcode = await getQrCodeOr404(req, res);
+    const rule = await getRuleOr404(req, res);
 
-    if (qrcode) {
-      const formattedQrCode = await formatQrCodeResponse(req, res, [qrcode]);
-      res.status(200).send(formattedQrCode[0]);
+    if (rule) {
+      const formattedRule = await formatRuleResponse(req, res, [rule]);
+      res.status(200).send(formattedRule[0]);
     }
   });
 
   app.delete("/api/rules/:id", async (req, res) => {
-    const qrcode = await getQrCodeOr404(req, res);
+    const rule = await getRuleOr404(req, res);
 
-    if (qrcode) {
-      await QRCodesDB.delete(req.params.id);
+    if (rule) {
+      await rulesDB.delete(req.params.id);
       res.status(200).send();
     }
   });

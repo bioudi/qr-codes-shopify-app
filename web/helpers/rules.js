@@ -1,4 +1,4 @@
-import { QRCodesDB } from "../qr-codes-db.js";
+import { rulesDB } from "../rules-db.js";
 
 /*
   The app's database stores the productId and the discountId.
@@ -31,9 +31,9 @@ const QR_CODE_ADMIN_QUERY = `
   }
 `;
 
-export async function getQrCodeOr404(req, res, checkDomain = true) {
+export async function getRuleOr404(req, res, checkDomain = true) {
   try {
-    const response = await QRCodesDB.read(req.params.id);
+    const response = await rulesDB.read(req.params.id);
     if (
       response === undefined ||
       (checkDomain &&
