@@ -40,13 +40,13 @@ function SmallScreenCard({ id, title, trigger, createdAt, navigate }) {
   );
 }
 
-export function QRCodeIndex({ rules, loading }) {
+export function RuleIndex({ rules, loading }) {
   const navigate = useNavigate();
 
   /* Check if screen is small */
   const isSmallScreen = useMedia("(max-width: 640px)");
 
-  /* Map over QRCodes for small screen */
+  /* Map over Rules for small screen */
   const smallScreenMarkup = rules.map((rule) => (
     <SmallScreenCard key={rule.id} navigate={navigate} {...rule} />
   ));

@@ -1,4 +1,3 @@
-export { ProductsCard } from "./ProductsCard";
-export { QRCodeForm } from "./QRCodeForm";
-export { QRCodeIndex } from "./QRCodeIndex";
+export { RuleForm } from "./RuleForm";
+export { RuleIndex } from "./RuleIndex";
 export * from "./providers";

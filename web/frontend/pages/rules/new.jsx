@@ -1,6 +1,6 @@
 import { TitleBar } from "@shopify/app-bridge-react";
 import { Page } from "@shopify/polaris";
-import { QRCodeForm } from "../../components";
+import { RuleForm } from "../../components";
 
 export default function ManageCode() {
   const breadcrumbs = [{ content: "Rules", url: "/" }];
@@ -12,7 +12,7 @@ export default function ManageCode() {
         breadcrumbs={breadcrumbs}
         primaryAction={null}
       />
-      <QRCodeForm />
+      <RuleForm />
     </Page>
   );
 }

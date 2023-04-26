@@ -17,7 +17,7 @@ import { useAuthenticatedFetch } from "../hooks";
 /* Import custom hooks for forms */
 import { notEmptyString, useField, useForm } from "@shopify/react-form";
 
-export function QRCodeForm({ rule: InitialRule }) {
+export function RuleForm({ rule: InitialRule }) {
   const [rule, setRule] = useState(InitialRule);
   const navigate = useNavigate();
   const fetch = useAuthenticatedFetch();

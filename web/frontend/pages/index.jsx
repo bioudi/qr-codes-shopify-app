@@ -6,7 +6,7 @@ import {
   Page,
   SkeletonBodyText,
 } from "@shopify/polaris";
-import { QRCodeIndex } from "../components";
+import { RuleIndex } from "../components";
 import { useAppQuery } from "../hooks";
 
 export default function HomePage() {
@@ -33,9 +33,8 @@ export default function HomePage() {
     url: "/api/rules",
   });
 
-  /* Set the QR codes to use in the list */
-  const qrCodesMarkup = rules?.length ? (
-    <QRCodeIndex rules={rules} loading={isRefetching} />
+  const rulesMarkup = rules?.length ? (
+    <RuleIndex rules={rules} loading={isRefetching} />
   ) : null;
 
   /* loadingMarkup uses the loading component from AppBridge and components from Polaris  */
@@ -71,7 +70,7 @@ export default function HomePage() {
     and include the empty state contents set above.
   */
   return (
-    <Page fullWidth={!!qrCodesMarkup}>
+    <Page fullWidth={!!rulesMarkup}>
       <TitleBar
         title="Slackify for Shopify"
         primaryAction={{
@@ -82,7 +81,7 @@ export default function HomePage() {
       <Layout>
         <Layout.Section>
           {loadingMarkup}
-          {qrCodesMarkup}
+          {rulesMarkup}
           {emptyStateMarkup}
         </Layout.Section>
       </Layout>

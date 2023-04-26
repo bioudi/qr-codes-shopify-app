@@ -1,10 +1,10 @@
 import { Loading, TitleBar } from "@shopify/app-bridge-react";
 import { Card, Layout, Page, SkeletonBodyText } from "@shopify/polaris";
 import { useParams } from "react-router-dom";
-import { QRCodeForm } from "../../components";
+import { RuleForm } from "../../components";
 import { useAppQuery } from "../../hooks";
 
-export default function QRCodeEdit() {
+export default function RuleEdit() {
   const breadcrumbs = [{ content: "QR codes", url: "/" }];
   const { id } = useParams();
 
@@ -14,13 +14,13 @@ export default function QRCodeEdit() {
   The backend supplements app data with data queried from the Shopify GraphQL Admin API.
 */
   const {
-    data: QRCode,
+    data: rule,
     isLoading,
     isRefetching,
   } = useAppQuery({
     url: `/api/rules/${id}`,
     reactQueryOptions: {
-      /* Disable refetching because the QRCodeForm component ignores changes to its props */
+      /* Disable refetching because the RuleForm component ignores changes to its props */
       refetchOnReconnect: false,
     },
   });
@@ -67,7 +67,7 @@ export default function QRCodeEdit() {
         breadcrumbs={breadcrumbs}
         primaryAction={null}
       />
-      <QRCodeForm rule={QRCode} />
+      <RuleForm rule={rule} />
     </Page>
   );
 }
